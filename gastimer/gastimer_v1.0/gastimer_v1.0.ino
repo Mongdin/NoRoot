@@ -22,7 +22,7 @@ void setup()
   MsTimer2::start();
   servo_close();
   //Serial.print("started!");
-  delay(500);
+  delay(2000);
   servo.detach();
   
 
@@ -38,13 +38,13 @@ void alarm(){
 
 void servo_open() {
   servo.attach(servoPin);
-  servotime=3;
+  servotime=4;
   servo.write(0);
 }
 
 void servo_close() {
   servo.attach(servoPin);
-  servotime=3;
+  servotime=4;
   servo.write(90);
   buzzerblink=0;
 }
@@ -58,7 +58,7 @@ void buttonint() {
 
 void timeadd() {
   closetime--;
-  if(closetime<=0) {state=0;closetime=0;servo_close();}
+  if(closetime<=0) {state=0;closetime=0;}
   servotime--;
   if(servotime<=0) {servo.detach(); servotime = 0;}
   if(buzzerblink<=0) {
@@ -87,6 +87,7 @@ else if(state==1) {
 else if(state==2) {
   if(closetime<=interval2){
     buzzerblink=1;
+    if(closetime==1){servo_close();}
   }
 }
 else if(state==3) {
