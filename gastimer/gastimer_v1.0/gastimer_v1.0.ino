@@ -1,8 +1,8 @@
 #include <MsTimer2.h>
 #include <Servo.h> 
 
-int static interval = 15;
-int static interval2 = 10;
+int static interval = 180;
+int static interval2 = 12;
 int state = 0;
 int angle = 0; // servo position in degrees 
 volatile int closetime = 0;
@@ -14,14 +14,14 @@ int buzzer = 7;
 Servo servo; 
 void setup() 
 { 
-  Serial.begin(9600);
+  //Serial.begin(9600);
   pinMode(buttonpin, INPUT_PULLUP); 
   pinMode(buzzer, OUTPUT); 
   attachInterrupt(0,buttonint,FALLING);
   MsTimer2::set(1000, timeadd);
   MsTimer2::start();
   servo_close();
-  Serial.print("started!");
+  //Serial.print("started!");
   
 
 } 
@@ -37,20 +37,20 @@ void alarm(){
 void servo_open() {
   servo.attach(servoPin);
   servotime=3;
-  servo.write(100);
+  servo.write(0);
 }
 
 void servo_close() {
   servo.attach(servoPin);
   servotime=3;
-  servo.write(0);
+  servo.write(100);
   buzzerblink=0;
 }
 void buttonint() {
   buzzerblink=0;
   if(state==0) {state=1;}
   else if(state==2) {state=3;}
-  Serial.print("Button Interrupt!!!");
+  //Serial.print("Button Interrupt!!!");
   
 }
 
@@ -71,8 +71,8 @@ void timeadd() {
 
 void loop() 
 { 
-  Serial.println(state);
-  Serial.println(closetime);
+  //Serial.println(state);
+  //Serial.println(closetime);
   
 if(state==0) {
   ;
