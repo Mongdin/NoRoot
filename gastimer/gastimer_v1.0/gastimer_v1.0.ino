@@ -6,7 +6,7 @@ int static interval2 = 12;
 int state = 0;
 int angle = 0; // servo position in degrees 
 volatile int closetime = 0;
-volatile int servotime = 3;
+volatile int servotime = 0;
 volatile int buzzerblink = 0;
 int servoPin = 9;
 int buttonpin = 2;
@@ -22,6 +22,8 @@ void setup()
   MsTimer2::start();
   servo_close();
   //Serial.print("started!");
+  delay(500);
+  servo.detach();
   
 
 } 
@@ -43,7 +45,7 @@ void servo_open() {
 void servo_close() {
   servo.attach(servoPin);
   servotime=3;
-  servo.write(100);
+  servo.write(90);
   buzzerblink=0;
 }
 void buttonint() {
@@ -59,11 +61,11 @@ void timeadd() {
   if(closetime<=0) {state=0;closetime=0;servo_close();}
   servotime--;
   if(servotime<=0) {servo.detach(); servotime = 0;}
-    if(buzzerblink<=0) {
-      digitalWrite(buzzer,LOW); buzzerblink=0;
-      }
-    else
-      digitalWrite(buzzer,!digitalRead(buzzer));
+  if(buzzerblink<=0) {
+    digitalWrite(buzzer,LOW); buzzerblink=0;
+    }
+  else
+    digitalWrite(buzzer,!digitalRead(buzzer));
 }
  
 
